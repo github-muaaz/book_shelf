@@ -4,6 +4,7 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
+import {useMediaQuery} from "@mui/material";
 import CardContent from "@mui/material/CardContent";
 
 import Api from "../../service/api";
@@ -95,6 +96,8 @@ const BookList: React.FC = () => {
         return arr;
     };
 
+    const isSmallScreen = useMediaQuery('(max-width:600px)');
+
     const handleCreate = () => setModalBody(<CreateModal onClose={() => setModalBody(null)}/>);
 
     console.log('books', books);
@@ -109,36 +112,44 @@ const BookList: React.FC = () => {
 
             <Box
                 display="flex"
-                justifyContent={'space-between'}
-                alignItems="start"
+                justifyContent="space-between"
+                alignItems={isSmallScreen ? "center" : "start"}
+                flexDirection={isSmallScreen ? "column" : "row"}
                 gap={4}
                 p={2}
             >
                 <Box>
-                    <Box display={'flex'} gap={2}>
-                        <Typography variant="body1" color="white" fontWeight="bold" sx={{fontSize: '36px'}}>You’ve
-                            got</Typography>
-                        <Typography variant="body1" color="#6200EE" fontWeight="bold"
-                                    sx={{fontSize: '36px'}}>{`${books?.length} books`}</Typography>
+                    <Box display="flex" gap={2}>
+                        <Typography variant="body1" color="white" fontWeight="bold" sx={{fontSize: '36px'}}>
+                            You’ve got
+                        </Typography>
+                        <Typography variant="body1" color="#6200EE" fontWeight="bold" sx={{fontSize: '36px'}}>
+                            {/* Replace `books?.length` with your actual variable */}
+                            {`${books?.length} books`}
+                        </Typography>
                     </Box>
-                    <Typography variant="body1" color="white" sx={{fontSize: '20px'}}>Your books today</Typography>
+                    <Typography variant="body1" color="white" sx={{fontSize: '20px'}}>
+                        Your books today
+                    </Typography>
                 </Box>
 
-                <Button
-                    type="submit"
-                    variant="contained"
-                    onClick={handleCreate}
-                    sx={{
-                        mt: 3,
-                        mb: 2,
-                        backgroundColor: '#6200EE',
-                        '&:hover': {
+                {!isSmallScreen && (
+                    <Button
+                        type="submit"
+                        variant="contained"
+                        onClick={handleCreate}
+                        sx={{
+                            mt: 3,
+                            mb: 2,
                             backgroundColor: '#6200EE',
-                        },
-                    }}
-                >
-                    + Create a book
-                </Button>
+                            '&:hover': {
+                                backgroundColor: '#6200EE',
+                            },
+                        }}
+                    >
+                        + Create a book
+                    </Button>
+                )}
             </Box>
 
             <Box sx={{marginTop: '36px'}}>
