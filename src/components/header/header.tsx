@@ -47,7 +47,7 @@ const Header: React.FC = () => {
             alignItems="center"
             gap={4}
             p={2}
-            sx={{width: '100%', backgroundColor: 'red'}}
+            sx={{width: '100%'}}
         >
             <Box id='logo' gridArea="logo">
                 <NavLink to="/">
