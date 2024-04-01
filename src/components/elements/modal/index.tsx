@@ -27,7 +27,7 @@ const CustomModal: React.FC<Props> = ({children, onClose}) => {
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description"
         >
-            <Box sx={style}>
+            <Box sx={{minWidth: {xs: 'fit-content', sm: '400px'}, ...style}}>
                 {children}
             </Box>
         </Modal>
