@@ -21,7 +21,7 @@ const EditModal: React.FC<ModalBodyInterface> = ({ book, onClose }) => {
 
         Api.PutData(`/book/${book?.id}`, formData, true)
             .then(() => {
-                e.currentTarget.reset();
+                e.currentTarget?.reset();
                 onClose();
             })
     }
