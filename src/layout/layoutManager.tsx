@@ -6,11 +6,12 @@ import MainLayout from './main';
 import AuthLayout from './auth';
 import NotFoundLayout from './notFound';
 import ChildrenInterface from '../interfaces/Children';
+import Box from "@mui/material/Box";
 
 const Container = styled.div`
   width: 100vw;
   height: 100vh;
-  background: #F8F8F8 url('image/bg-img.png') no-repeat;
+  background: #F8F8F8 url('/image/bg-img.png') no-repeat;
 `;
 
 const LayoutManager: React.FC<ChildrenInterface> = ({ children }) => {
@@ -39,7 +40,9 @@ const LayoutManager: React.FC<ChildrenInterface> = ({ children }) => {
 
     return (
         <Container>
-            <Layout>{children}</Layout>
+            <Box sx={{padding: {xs: '0', sm: '0 50px'}}}>
+                <Layout>{children}</Layout>
+            </Box>
         </Container>
     );
 };
