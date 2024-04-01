@@ -9,7 +9,7 @@ interface Props {
 
 const Form: React.FC<Props> = ({ children, onSubmit, sx, ...rest }) => { // Updated prop name to onSubmit
     return (
-        <form onSubmit={onSubmit} {...rest}>
+        <form style={{width: '100%'}} onSubmit={onSubmit} {...rest}>
             <Box sx={sx} {...rest}>
                 {children}
             </Box>

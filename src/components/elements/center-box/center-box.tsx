@@ -17,7 +17,7 @@ const CenteredDiv: React.FC<Props> = ({bg, children}) => {
                 transform: 'translate(-50%, -50%)',
                 borderRadius: '8px',
                 backgroundColor: bg || '#fff',
-                width: 'fit-content',
+                minWidth: {xs: 'fit-content', sm: '400px'},
                 padding: '48px 28px',
             }}
         >

@@ -11,7 +11,7 @@ import Link from "@mui/material/Link";
 import { useMediaQuery } from "@mui/material";
 
 import CenterBox from "../../components/elements/center-box";
-import Index from "../../components/elements/form";
+import Form from "../../components/elements/form";
 
 interface FormData {
     username: string;
@@ -83,13 +83,12 @@ const SignIn: React.FC = () => {
                     Sign in
                 </Typography>
 
-                <Index
+                <Form
                     onSubmit={handleSubmit}
                     sx={{
                         display: 'flex',
                         flexDirection: 'column',
                         justifyContent: 'space-between',
-                        width: '100%',
                         gap: 2,
                     }}
                 >
@@ -156,7 +155,7 @@ const SignIn: React.FC = () => {
                             </Link>
                         </Box>
                     </Box>
-                </Index>
+                </Form>
             </Stack>
         </CenterBox>
     );
