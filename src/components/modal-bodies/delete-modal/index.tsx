@@ -39,7 +39,7 @@ const DeleteModal: React.FC<ModalBodyInterface> = ({ id, onClose }) => {
                     sx={{
                         color: '#6200EE',
                         borderColor: '#6200EE',
-                        width: { xs: '100%', md: 'auto' },
+                        width: { xs: '100%' },
                         fontSize: { xs: '14px', md: 'inherit' },
                     }}
                     onClick={onClose}
@@ -56,7 +56,7 @@ const DeleteModal: React.FC<ModalBodyInterface> = ({ id, onClose }) => {
                         '&:hover': {
                             backgroundColor: '#FF4D4F',
                         },
-                        width: { xs: '100%', md: 'auto' },
+                        width: { xs: '100%'},
                         fontSize: { xs: '14px', md: 'inherit' },
                     }}
                     onClick={handleDelete}
