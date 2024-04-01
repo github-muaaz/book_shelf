@@ -8,39 +8,40 @@ import Api from "../../../service/api";
 import Icon from "../../elements/icon";
 import ModalBodyInterface from "../../../interfaces/Modal";
 
-const DeleteModal: React.FC<ModalBodyInterface> = ({id, onClose}) => {
-
+const DeleteModal: React.FC<ModalBodyInterface> = ({ id, onClose }) => {
     const handleDelete = () => {
-        //     to Api call to delete
-        Api.Delete(`/books/${id}`, true)
-            .then(() => onClose())
-    }
+        // Api call to delete
+        Api.Delete(`/books/${id}`, true).then(() => onClose());
+    };
 
     return (
-        <Stack
-            gap={'40px'}
-        >
+        <Stack gap={{ xs: '20px', md: '40px' }}>
             <Box
                 display="flex"
-                justifyContent={'space-between'}
+                justifyContent="space-between"
                 alignItems="center"
             >
-                <Typography color={'error'} fontWeight={'700'} sx={{fontSize: '20px'}}>Are you sure to
-                    delete?</Typography>
-
-                <Icon pointer onClick={onClose} icon={'close'}/>
+                <Typography color="error" fontWeight={700} sx={{ fontSize: { xs: '16px', md: '20px' } }}>
+                    Are you sure to delete?
+                </Typography>
+                <Icon pointer onClick={onClose} icon="close" />
             </Box>
 
             <Box
                 display="flex"
-                justifyContent={'space-between'}
+                justifyContent="space-between"
                 alignItems="center"
-                gap={'12px'}
+                gap={{ xs: '8px', md: '12px' }}
             >
                 <Button
                     fullWidth
                     variant="outlined"
-                    sx={{color: '#6200EE', borderColor: '#6200EE'}}
+                    sx={{
+                        color: '#6200EE',
+                        borderColor: '#6200EE',
+                        width: { xs: '100%', md: 'auto' },
+                        fontSize: { xs: '14px', md: 'inherit' },
+                    }}
                     onClick={onClose}
                 >
                     Cancel
@@ -55,6 +56,8 @@ const DeleteModal: React.FC<ModalBodyInterface> = ({id, onClose}) => {
                         '&:hover': {
                             backgroundColor: '#FF4D4F',
                         },
+                        width: { xs: '100%', md: 'auto' },
+                        fontSize: { xs: '14px', md: 'inherit' },
                     }}
                     onClick={handleDelete}
                 >
@@ -62,7 +65,7 @@ const DeleteModal: React.FC<ModalBodyInterface> = ({id, onClose}) => {
                 </Button>
             </Box>
         </Stack>
-    )
-}
+    );
+};
 
 export default DeleteModal;

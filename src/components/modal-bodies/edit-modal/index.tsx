@@ -4,7 +4,7 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
-import {TextField} from "@mui/material";
+import { TextField } from "@mui/material";
 import Button from "@mui/material/Button";
 
 import Api from "../../../service/api";
@@ -12,7 +12,7 @@ import Icon from "../../elements/icon";
 import Form from "../../elements/form/form";
 import ModalBodyInterface from "../../../interfaces/Modal";
 
-const EditModal: React.FC<ModalBodyInterface> = ({book, onClose}) => {
+const EditModal: React.FC<ModalBodyInterface> = ({ book, onClose }) => {
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
         e.preventDefault();
@@ -27,17 +27,14 @@ const EditModal: React.FC<ModalBodyInterface> = ({book, onClose}) => {
     }
 
     return (
-        <Stack
-            gap={'20px'}
-        >
+        <Stack gap={{ xs: '10px', md: '20px' }}>
             <Box
                 display="flex"
-                justifyContent={'space-between'}
+                justifyContent="space-between"
                 alignItems="center"
             >
-                <Typography fontWeight={'700'} sx={{fontSize: '20px'}}>Edit a book</Typography>
-
-                <Icon pointer onClick={onClose} icon={'close'}/>
+                <Typography fontWeight={700} sx={{ fontSize: { xs: '18px', md: '20px' } }}>Edit a book</Typography>
+                <Icon pointer onClick={onClose} icon="close" />
             </Box>
 
             <Form
@@ -101,18 +98,16 @@ const EditModal: React.FC<ModalBodyInterface> = ({book, onClose}) => {
 
                 <Box
                     display="flex"
-                    justifyContent={'space-between'}
+                    justifyContent="space-between"
                     alignItems="center"
-                    gap={'12px'}
-                    sx={{
-                        mt: '20px'
-                    }}
+                    gap={{ xs: '8px', md: '12px' }}
+                    mt={{ xs: '10px', md: '20px' }}
                 >
                     <Button
                         fullWidth
-                        type={'button'}
+                        type="button"
                         variant="outlined"
-                        sx={{color: '#6200EE', borderColor: '#6200EE'}}
+                        sx={{ color: '#6200EE', borderColor: '#6200EE' }}
                         onClick={onClose}
                     >
                         Cancel
@@ -120,7 +115,7 @@ const EditModal: React.FC<ModalBodyInterface> = ({book, onClose}) => {
 
                     <Button
                         fullWidth
-                        type={'submit'}
+                        type="submit"
                         variant="contained"
                         sx={{
                             color: '#fff',

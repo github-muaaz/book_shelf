@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import Stack from "@mui/material/Stack";
 import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
@@ -8,6 +8,7 @@ import Typography from "@mui/material/Typography";
 import FormHelperText from '@mui/material/FormHelperText';
 import Box from "@mui/material/Box";
 import Link from "@mui/material/Link";
+import { useMediaQuery } from "@mui/material";
 
 import CenterBox from "../../components/elements/center-box";
 import Form from "../../components/elements/form/form";
@@ -24,8 +25,8 @@ const SignIn: React.FC = () => {
     };
 
     const [formData, setFormData] = useState<FormData>(initialFormData);
-
     const [errors, setErrors] = useState<Partial<FormData>>({});
+    const isSmallScreen = useMediaQuery('(max-width:600px)');
 
     const validate = (data: FormData): Partial<FormData> => {
         const errors: Partial<FormData> = {};
@@ -45,7 +46,7 @@ const SignIn: React.FC = () => {
         const errors = validate(formData);
 
         // check if error does not exist
-        if (Object.keys(errors).length === 0){
+        if (Object.keys(errors).length === 0) {
 
             // todo Api call [no sign-in api in doc]
             console.log('Form data:', formData);
@@ -61,7 +62,7 @@ const SignIn: React.FC = () => {
     };
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-        const {name, value} = e.target;
+        const { name, value } = e.target;
 
         setFormData((prevData) => ({
             ...prevData,
@@ -72,13 +73,13 @@ const SignIn: React.FC = () => {
     return (
         <CenterBox>
             <Stack
-                spacing={{xs: 2, sm: 4}}
+                spacing={{ xs: 2, sm: 4 }}
                 useFlexGap
                 direction="column"
                 justifyContent="center"
                 alignItems="center"
             >
-                <Typography variant="h2" fontSize={38} fontWeight={600}>
+                <Typography variant="h2" fontSize={isSmallScreen ? 28 : 38} fontWeight={600}>
                     Sign in
                 </Typography>
 
@@ -89,7 +90,6 @@ const SignIn: React.FC = () => {
                         flexDirection: 'column',
                         justifyContent: 'space-between',
                         width: '100%',
-                        minWidth: '430px',
                         gap: 2,
                     }}
                 >
@@ -104,12 +104,18 @@ const SignIn: React.FC = () => {
                             required
                             error={!!errors.username}
                             placeholder="Enter your username"
+                            sx={{ fontSize: isSmallScreen ? 16 : undefined }}
                         />
                         {errors.username && <FormHelperText error id="component-error-text">{errors.username}</FormHelperText>}
                     </FormControl>
 
                     <FormControl component="fieldset" fullWidth>
-                        <FormLabel error={!!errors.password} htmlFor="password">Password</FormLabel>
+                        <FormLabel
+                            error={!!errors.password}
+                            htmlFor="password"
+                        >
+                            Password
+                        </FormLabel>
                         <OutlinedInput
                             id="password"
                             name="password"
@@ -119,6 +125,7 @@ const SignIn: React.FC = () => {
                             required
                             placeholder="Enter your password"
                             error={!!errors.password}
+                            sx={{ fontSize: isSmallScreen ? 16 : undefined }}
                         />
                         {errors.password && <FormHelperText error id="component-error-text">{errors.password}</FormHelperText>}
                     </FormControl>
@@ -140,9 +147,9 @@ const SignIn: React.FC = () => {
                             Sign In
                         </Button>
 
-                        <Box sx={{display: 'flex', gap: 1, justifyContent: 'center'}}>
+                        <Box sx={{ display: 'flex', gap: 1, justifyContent: 'center' }}>
                             <Typography variant="caption" display="block" gutterBottom>
-                                Don't have account?
+                                Don't have an account?
                             </Typography>
                             <Link href="/sign-up" variant="body2" underline={'none'}>
                                 Go to sign up.

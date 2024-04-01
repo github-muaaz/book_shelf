@@ -21,7 +21,7 @@ const CreateModal: React.FC<ModalBodyInterface> = ({onClose}) => {
 
             Api.PostData(`/book`, formData, true)
                 .then(() =>{
-                    e.currentTarget.reset();
+                    e.currentTarget?.reset();
                     onClose();
                 })
         }
