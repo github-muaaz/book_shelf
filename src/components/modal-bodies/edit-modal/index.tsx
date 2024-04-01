@@ -9,7 +9,7 @@ import Button from "@mui/material/Button";
 
 import Api from "../../../service/api";
 import Icon from "../../elements/icon";
-import Form from "../../elements/form/form";
+import Index from "../../elements/form";
 import ModalBodyInterface from "../../../interfaces/Modal";
 
 const EditModal: React.FC<ModalBodyInterface> = ({ book, onClose }) => {
@@ -37,7 +37,7 @@ const EditModal: React.FC<ModalBodyInterface> = ({ book, onClose }) => {
                 <Icon pointer onClick={onClose} icon="close" />
             </Box>
 
-            <Form
+            <Index
                 onSubmit={handleSubmit}
                 sx={{
                     display: 'flex',
@@ -128,7 +128,7 @@ const EditModal: React.FC<ModalBodyInterface> = ({ book, onClose }) => {
                         Save
                     </Button>
                 </Box>
-            </Form>
+            </Index>
         </Stack>
     )
 }

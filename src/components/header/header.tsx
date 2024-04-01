@@ -1,8 +1,8 @@
-import React, { ChangeEvent, useState } from "react";
+import React, {ChangeEvent, useState} from "react";
 import Box from "@mui/material/Box";
 import InputBase from '@mui/material/InputBase';
-import { NavLink } from "react-router-dom";
-import { CardMedia, List, ListItem, ListItemText } from "@mui/material";
+import {NavLink} from "react-router-dom";
+import {CardMedia, List, ListItem, ListItemText} from "@mui/material";
 import useMediaQuery from '@mui/material/useMediaQuery';
 
 import Icon from "../elements/icon";
@@ -34,39 +34,47 @@ const Header: React.FC = () => {
     return (
         <Box
             display="grid"
-            gridTemplateColumns="1fr auto"
-            gridTemplateAreas={`
-                "logo bell"
-                "search search"
-            `}
+            gridTemplateColumns="auto 1fr auto"
+            gridTemplateAreas={isSmallScreen
+                ? `
+                    "logo bell"
+                    "search search"
+                `
+                : `
+                    "logo search bell"
+                `}
             justifyContent="space-between"
             alignItems="center"
             gap={4}
             p={2}
+            sx={{width: '100%', backgroundColor: 'red'}}
         >
-            <Box gridArea="logo">
+            <Box id='logo' gridArea="logo">
                 <NavLink to="/">
-                    <Icon pointer icon="logo" />
+                    <Icon pointer icon="logo"/>
                 </NavLink>
             </Box>
 
             <Box
                 display="flex"
+                id='profile'
                 alignItems="center"
                 gap={{xs: 1.5, sm: 3}}
                 gridArea="bell"
+                sx={{justifyContent: 'end'}}
             >
-                <Icon pointer icon="bell" />
+                <Icon pointer icon="bell"/>
 
                 <CardMedia
                     component="img"
-                    sx={{ width: 35, display: { sm: 'block' } }}
+                    sx={{width: 35, display: {sm: 'block'}}}
                     image="./image/user-image-2.png"
                     alt="avatar"
                 />
             </Box>
 
             <Box
+                id='search'
                 gridArea="search"
                 position="relative"
                 display={'flex'}
@@ -90,7 +98,7 @@ const Header: React.FC = () => {
                             <ListItem key={index}>
                                 <ListItemText
                                     className={'pointer'}
-                                    primaryTypographyProps={{ fontWeight: 'bold' }}
+                                    primaryTypographyProps={{fontWeight: 'bold'}}
                                     primary={bookItem.book.title}
                                 />
                             </ListItem>
@@ -102,7 +110,7 @@ const Header: React.FC = () => {
                     fullWidth
                     onChange={handleChange}
                     id="search-input"
-                    sx={{ color: '#fff', ml: 1, flex: 1 }}
+                    sx={{color: '#fff', ml: 1, flex: 1}}
                     placeholder="Search for any training you want"
                 />
             </Box>
