@@ -1,0 +1,8 @@
+{
+  "apiEndpoint": "https://no23.lavina.tech",
+  "apiKey": "muaaz-test-api-key",
+  "apiSecret": "muaaz-test-api-secret",
+  "storageKey": "persist:storage"
+}
+
+
