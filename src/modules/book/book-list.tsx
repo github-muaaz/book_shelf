@@ -148,11 +148,11 @@ const fake = [
         "book": {
             "id": 21,
             "isbn": "9781118464465",
-            "title": "Raspberry Pi User Guide",
+            "title": "Guide",
             "cover": "http://url.to.book.cover",
-            "author": "Eben Upton",
-            "published": 2012,
-            "pages": 221
+            "author": "Eben 3",
+            "published": 2013,
+            "pages": 198
         },
         "status": 0
     },
@@ -160,23 +160,23 @@ const fake = [
         "book": {
             "id": 22,
             "isbn": "9781118464465",
-            "title": "Raspberry Pi User Guide",
+            "title": "Pi User",
             "cover": "http://url.to.book.cover",
-            "author": "Eben Upton",
+            "author": "Eben",
             "published": 2012,
-            "pages": 221
+            "pages": 21
         },
-        "status": 0
+        "status": 1
     },
     {
         "book": {
             "id": 23,
             "isbn": "9781118464465",
-            "title": "Raspberry Pi User Guide",
+            "title": "User Guide",
             "cover": "http://url.to.book.cover",
-            "author": "Eben Upton",
-            "published": 2012,
-            "pages": 221
+            "author": "Eben 2",
+            "published": 2011,
+            "pages": 331
         },
         "status": 0
     },
@@ -184,12 +184,12 @@ const fake = [
         "book": {
             "id": 24,
             "isbn": "9781118464465",
-            "title": "Raspberry Pi User Guide",
+            "title": "Raspberry Pi",
             "cover": "http://url.to.book.cover",
             "author": "Eben Upton",
-            "published": 2012,
-            "pages": 221
+            "published": 2010,
+            "pages": 22
         },
-        "status": 0
+        "status": 2
     }
 ]
