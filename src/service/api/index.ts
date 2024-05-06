@@ -2,18 +2,21 @@ import { toast } from "react-toastify";
 import request from "../http";
 
 class Api {
-    static SignUp = (data: { key: string; secret: string }) => {
+    static SignUp = (data: { key: string; secret: string }, onResolve?: any) => {
         request
             .post(`/signup`, data)
-            .then(() => {
+            .then((res) => {
                 localStorage.setItem("key", data.key);
                 localStorage.setItem("secret", data.secret);
                 toast.success("Signed up successfully!");
 
                 window.location.pathname = '/books';
+
+                onResolve();
             })
             .catch((err) => {
-                toast.error(err.response?.message);
+                console.log('err',err)
+                toast.error(err.response?.data?.message);
             });
     };
 

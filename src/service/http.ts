@@ -1,5 +1,5 @@
 import axios from "axios";
-import { toast } from "react-toastify";
+import {toast} from "react-toastify";
 import CryptoJS from "crypto-js";
 
 import configJson from "../utils/config.json";
@@ -12,23 +12,19 @@ const request = axios.create({
 request.interceptors.request.use(
     (config) => {
         if (!config.headers.key)
-            config.headers.key = localStorage.getItem('key') || configJson.apiKey;
+            config.headers.key = localStorage.getItem('key');
 
         if (!config.headers.sign) {
-            const secret = localStorage.getItem('secret') || configJson.apiSecret;
+            const secret = localStorage.getItem('secret');
             const method = config.method?.toUpperCase();
             const url = config.url;
             let bodyString = "";
 
-            if (config.data) {
+            if (config.data)
                 bodyString = JSON.stringify(config.data);
-            }
 
-            // console.log('body', bodyString, config.data)
-
-            const signstr = `${method}${url}${bodyString}${secret}`;
-            const sign = CryptoJS.MD5(signstr).toString();
-            config.headers.sign = sign;
+            const signStr = `${method}${url}${bodyString}${secret}`;
+            config.headers.sign = CryptoJS.MD5(signStr).toString();
         }
 
         return config;

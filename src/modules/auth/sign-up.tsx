@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import Stack from "@mui/material/Stack";
 import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
@@ -7,7 +7,7 @@ import Button from '@mui/material/Button';
 import Typography from "@mui/material/Typography";
 import FormHelperText from '@mui/material/FormHelperText';
 import Box from "@mui/material/Box";
-import { useMediaQuery } from "@mui/material";
+import {useMediaQuery} from "@mui/material";
 
 import CenterBox from "../../components/elements/center-box";
 import Index from "../../components/elements/form";
@@ -55,27 +55,26 @@ const SignUp: React.FC = () => {
 
         const errors = validate(formData);
 
-        if (Object.keys(errors).length === 0) {
-            Api.SignUp(formData);
-
-            setFormData(initialFormData);
-            setErrors({});
-        } else {
+        if (Object.keys(errors).length === 0)
+            Api.SignUp(formData, () => {
+                setFormData(initialFormData);
+                setErrors({});
+            })
+        else
             setErrors(errors);
-        }
 
         e.currentTarget.reset();
     };
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-        const { name, value } = e.target;
-        setFormData((prevData) => ({ ...prevData, [name]: value }));
+        const {name, value} = e.target;
+        setFormData((prevData) => ({...prevData, [name]: value}));
     };
 
     return (
         <CenterBox>
             <Stack
-                spacing={{ xs: 2, sm: 4 }}
+                spacing={{xs: 2, sm: 4}}
                 useFlexGap
                 direction="column"
                 justifyContent="center"
@@ -106,7 +105,7 @@ const SignUp: React.FC = () => {
                             required
                             error={!!errors.name}
                             placeholder="Enter your name"
-                            sx={{ fontSize: isSmallScreen ? 16 : undefined }}
+                            sx={{fontSize: isSmallScreen ? 16 : undefined}}
                         />
                         {errors.name && <FormHelperText error id="component-error-text">{errors.name}</FormHelperText>}
                     </FormControl>
@@ -122,9 +121,10 @@ const SignUp: React.FC = () => {
                             required
                             error={!!errors.email}
                             placeholder="Enter your email"
-                            sx={{ fontSize: isSmallScreen ? 16 : undefined }}
+                            sx={{fontSize: isSmallScreen ? 16 : undefined}}
                         />
-                        {errors.email && <FormHelperText error id="component-error-text">{errors.email}</FormHelperText>}
+                        {errors.email &&
+                            <FormHelperText error id="component-error-text">{errors.email}</FormHelperText>}
                     </FormControl>
 
                     <FormControl component="fieldset" fullWidth>
@@ -142,7 +142,7 @@ const SignUp: React.FC = () => {
                             required
                             placeholder="Enter your key"
                             error={!!errors.key}
-                            sx={{ fontSize: isSmallScreen ? 16 : undefined }}
+                            sx={{fontSize: isSmallScreen ? 16 : undefined}}
                         />
                         {errors.key && <FormHelperText error id="component-error-text">{errors.key}</FormHelperText>}
                     </FormControl>
@@ -162,9 +162,10 @@ const SignUp: React.FC = () => {
                             required
                             placeholder="Enter your secret"
                             error={!!errors.secret}
-                            sx={{ fontSize: isSmallScreen ? 16 : undefined }}
+                            sx={{fontSize: isSmallScreen ? 16 : undefined}}
                         />
-                        {errors.secret && <FormHelperText error id="component-error-text">{errors.secret}</FormHelperText>}
+                        {errors.secret &&
+                            <FormHelperText error id="component-error-text">{errors.secret}</FormHelperText>}
                     </FormControl>
 
                     <Box>

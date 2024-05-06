@@ -1,7 +1,7 @@
 import React, { lazy, Suspense } from 'react';
-import LayoutManager from '../layout/layoutManager';
 import {BrowserRouter, Navigate, Route, Routes} from "react-router-dom";
 
+import LayoutManager from '../layout/layoutManager';
 const SignUpPage = lazy(() => import('../modules/auth/sign-up'));
 const BookListPage = lazy(() => import('../modules/book/book-list'));
 const HomePage = lazy(() => import('../modules/home'))
