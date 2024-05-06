@@ -1,19 +1,12 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
-import styled from 'styled-components';
+import {Container} from "@mui/material";
+import Box from "@mui/material/Box";
 
 import MainLayout from './main';
 import AuthLayout from './auth';
 import NotFoundLayout from './notFound';
 import ChildrenInterface from '../interfaces/Children';
-import Box from "@mui/material/Box";
-
-const Container = styled.div`
-  width: 100vw;
-  height: 100vh;
-  background: #F8F8F8 
-  //url('/image/bg-img.png') no-repeat;
-`;
 
 const LayoutManager: React.FC<ChildrenInterface> = ({ children }) => {
     const getLayout = (pathname: string) => {
@@ -40,7 +33,13 @@ const LayoutManager: React.FC<ChildrenInterface> = ({ children }) => {
     const Layout = getLayouts()[getLayout(pathname)];
 
     return (
-        <Container>
+        <Container
+            sx={{
+                width: '100vw',
+                height: '100vh',
+                bgcolor: '#F8F8F8'
+            }}
+        >
             <Box sx={{padding: {xs: '0', sm: '0 50px'}}}>
                 <Layout>{children}</Layout>
             </Box>
