@@ -17,13 +17,16 @@ const CreateModal: React.FC<ModalBodyInterface> = ({onClose}) => {
         const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
             e.preventDefault();
 
-            const formData = new FormData(e.currentTarget)
+            const form = e.currentTarget;
 
-            Api.PostData(`/book`, formData, true)
-                .then(() =>{
-                    e.currentTarget?.reset();
-                    onClose();
-                })
+            const formData = {
+                isbn: form.isbn.value
+            };
+
+            Api.PostData('/books', formData, true)?.then(() => {
+                e.currentTarget?.reset();
+                onClose();
+            });
         }
 
         return (

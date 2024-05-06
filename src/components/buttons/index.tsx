@@ -10,15 +10,30 @@ import BookInterface from "../../interfaces/Book";
 
 interface PropsBtn {
     book: BookInterface,
+    callBack: () => void
 }
 
-const Buttons: React.FC<PropsBtn> = ({book}) => {
+const Buttons: React.FC<PropsBtn> = ({callBack, book}) => {
 
     const [modalBody, setModalBody] = useState<ReactNode>(null);
 
-    const handleDelete = () => setModalBody(<DeleteModal id={book.id} onClose={() => setModalBody(null)}/>);
+    const handleDelete = () => setModalBody(
+        <DeleteModal
+            id={book.id}
+            onClose={() => {
+                setModalBody(null);
+                callBack();
+            }}
+        />);
 
-    const handleEdit = () => setModalBody(<EditModal book={book} onClose={() => setModalBody(null)}/>);
+    const handleEdit = () => setModalBody(
+        <EditModal
+            book={book}
+            onClose={() => {
+                setModalBody(null);
+                callBack();
+            }}
+        />);
 
     return (
         <Box

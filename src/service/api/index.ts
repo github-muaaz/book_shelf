@@ -1,60 +1,59 @@
-import {toast} from "react-toastify";
-
-import storage from "../../store/local-storage";
+import { toast } from "react-toastify";
 import request from "../http";
-import config from "../../utils/config.json";
 
-class Auth {
-
-    static SignUp = (data: object) => {
+class Api {
+    static SignUp = (data: { key: string; secret: string }) => {
         request
             .post(`/signup`, data)
-            .then(res => {
-                console.log('res', res)
+            .then(() => {
+                localStorage.setItem("key", data.key);
+                localStorage.setItem("secret", data.secret);
+                toast.success("Signed up successfully!");
 
-                // todo save token (if exists in model) to local storage
-                storage.set(config.storageKey, {isAuthenticated: true, auth: {token: res.data?.data}}, true);
-
+                window.location.pathname = '/books';
             })
             .catch((err) => {
-                storage.set(config.storageKey, {isAuthenticated: false}, true)
+                toast.error(err.response?.message);
+            });
+    };
 
-                toast.error(err.response?.message)
+    static Me = () => {
+        return request
+            .get(`/myself`)
+            .then((res) => {
+                return res.data?.data;
+            })
+            .catch((err) => {
+                toast.error(err.response?.message);
             });
     };
 
     static FetchData = (url: string, config?: object) => {
         return request
             .get(url, config)
-            .then(res => {
+            .then((res) => {
                 return res.data?.data;
             })
-            .catch(err => {
-                console.log('get request error', err)
+            .catch((err) => {
                 if (err.response?.status === 403)
-                    toast.error('Please! Login or Sign up first')
-                else
-                    toast.error(err.response?.message);
+                    toast.error("Please! Login or Sign up first");
+                else toast.error(err.response?.message);
             });
     };
 
     static PostData = (url: string, data: object, notify?: boolean) => {
         return request
             .post(url, data)
-            .then(res => {
-                if (notify && res.data?.message)
-                    toast.success(res.data?.message)
-
+            .then((res) => {
+                if (notify && res.data?.message) toast.success(res.data?.message);
                 return res.data?.data;
             })
-            .catch(err => {
-                console.log('post request error',err)
-
+            .catch((err) => {
+                console.log('post request error', err);
                 if (err.response?.status === 403)
-                    toast.error('Please! Login or Sign up first')
+                    toast.error('Please! Login or Sign up first');
                 else
                     toast.error(err.response?.message);
-
                 return err;
             });
     };
@@ -63,16 +62,15 @@ class Auth {
         return request
             .patch(url, data)
             .then((res) => {
-                if (notify && res.data?.message)
-                    toast.success(res.data?.message)
+                if (notify && res.data?.message) toast.success(res.data?.message);
                 return res.data?.data;
             })
-            .catch(err => {
-                console.log('put request error',err)
+            .catch((err) => {
+                console.log('put request error', err);
                 if (err.response?.status === 403)
-                    toast.error('Please! Login or Sign up first')
-                else
-                    toast.error(err.response?.message);
+                    toast.error('Please! Login or Sign up first');
+                else toast.error(err.response?.message);
+                return err;
             });
     };
 
@@ -80,22 +78,18 @@ class Auth {
         return request
             .delete(url)
             .then((res) => {
-                if (notify && res.data?.isOk)
-                    toast.success('Successfully deleted');
-
+                if (notify && res.data?.isOk) toast.success('Successfully deleted');
                 return res;
             })
-            .catch(err => {
+            .catch((err) => {
                 console.log('delete request error', err);
-                if (err.response?.status === 403)
-                    toast.error('Please login or sign up first');
-                else
-                    toast.error(err.response?.data?.message || 'An error occurred');
-
+                if (err.response?.status === 403) toast.error('Please login or sign up first');
+                else toast.error(err.response?.data?.message || 'An error occurred');
                 return err;
             });
-    }
+    };
+
 
 }
 
-export default Auth;
+export default Api;

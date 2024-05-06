@@ -1,45 +1,47 @@
 import axios from "axios";
 import { toast } from "react-toastify";
+import CryptoJS from "crypto-js";
 
-// import storage from "../store/local-storage";
 import configJson from "../utils/config.json";
 
 const request = axios.create({
     baseURL: configJson.apiEndpoint,
 });
 
-const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-
 // Request interceptor
 request.interceptors.request.use(
-    (config: any) => {
-        // const storageItem = storage.get(configJson.storageKey);
-
-        // if (!config.headers.Authorization) {
-        //     const token = storageItem?.auth?.token || {};
-        //
-        //     if (token)
-        //         config.headers.Authorization = `${token?.tokenType} ${token?.accessToken}`;
-        // }
-
+    (config) => {
         if (!config.headers.key)
-            config.headers.key = configJson.apiKey;
+            config.headers.key = localStorage.getItem('key') || configJson.apiKey;
 
-        if (!config.headers.secret)
-            config.headers.secret = configJson.apiSecret;
+        if (!config.headers.sign) {
+            const secret = localStorage.getItem('secret') || configJson.apiSecret;
+            const method = config.method?.toUpperCase();
+            const url = config.url;
+            let bodyString = "";
 
-        config.headers.TimeZone = timezone;
+            if (config.data) {
+                bodyString = JSON.stringify(config.data);
+            }
+
+            // console.log('body', bodyString, config.data)
+
+            const signstr = `${method}${url}${bodyString}${secret}`;
+            const sign = CryptoJS.MD5(signstr).toString();
+            config.headers.sign = sign;
+        }
+
         return config;
     },
-    (error: any) => {
+    (error) => {
         console.error('Request error:', error);
         return Promise.reject(error);
     }
 );
 
 request.interceptors.response.use(
-    (response: any) => response,
-    (error: any) => {
+    (response) => response,
+    (error) => {
         console.error('Response error:', error);
 
         toast.error(error.response?.data?.errors?.[0]?.message);

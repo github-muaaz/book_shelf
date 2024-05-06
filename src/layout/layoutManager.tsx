@@ -11,7 +11,8 @@ import Box from "@mui/material/Box";
 const Container = styled.div`
   width: 100vw;
   height: 100vh;
-  background: #F8F8F8 url('/image/bg-img.png') no-repeat;
+  background: #F8F8F8 
+  //url('/image/bg-img.png') no-repeat;
 `;
 
 const LayoutManager: React.FC<ChildrenInterface> = ({ children }) => {

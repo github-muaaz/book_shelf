@@ -1,14 +1,12 @@
-import React, { ReactNode, useEffect, useState } from "react";
-import { Container, Grid } from "@mui/material";
+import React, {ReactNode, useEffect, useState} from "react";
+import {Container, Grid, useMediaQuery} from "@mui/material";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
-import { useMediaQuery } from "@mui/material";
 import CardContent from "@mui/material/CardContent";
 
 import Api from "../../service/api";
-import Header from "../../components/header";
 import Status from "../../components/elements/status";
 import HoverBox from "../../components/elements/hover-box";
 import Buttons from "../../components/buttons";
@@ -17,20 +15,25 @@ import CreateModal from "../../components/modal-bodies/create-modal";
 import CustomModal from "../../components/elements/modal";
 import BookItemInterface from "../../interfaces/BookItem";
 import CustomList from "../../components/elements/list/list";
+import Header from "../../components/header";
 
 const keys = ['Cover', 'Pages', 'Published', 'Isbn'];
 
 const BookList: React.FC = () => {
-    const [books, setBooks] = useState<BookItemInterface[]>(fake); // Replace 'fake' with initial data or empty array
+    const [books, setBooks] = useState<BookItemInterface[]>();
 
     const [modalBody, setModalBody] = useState<ReactNode>(null);
 
-    useEffect(() => {
+    const fetchBooks = () => {
         Api.FetchData('/books')
-            .then((res: any) => {
+            ?.then((res) => {
                 if (res)
                     setBooks(res)
-            });
+            })
+    }
+
+    useEffect(() => {
+        fetchBooks();
     }, []);
 
     // converting book properties into list items
@@ -47,17 +50,18 @@ const BookList: React.FC = () => {
 
     const isSmallScreen = useMediaQuery('(max-width:600px)');
 
-    const handleCreate = () => setModalBody(<CreateModal onClose={() => setModalBody(null)} />);
-
-    console.log('books', books);
+    const handleCreate = () => setModalBody(<CreateModal onClose={() => {
+        setModalBody(null);
+        fetchBooks();
+    }}/>);
 
     return (
-        <Container maxWidth="xl" sx={{ padding: '0 40px' }}>
+        <Container maxWidth="xl" sx={{padding: '0 40px'}}>
             <CustomModal onClose={() => setModalBody(null)}>
                 {modalBody}
             </CustomModal>
 
-            <Header />
+            <Header/>
 
             <Box
                 display="flex"
@@ -69,14 +73,16 @@ const BookList: React.FC = () => {
             >
                 <Box>
                     <Box display="flex" gap={2}>
-                        <Typography variant="body1" color="white" fontWeight="bold" sx={{ fontSize: isSmallScreen ? '24px' : '36px' }}>
+                        <Typography variant="body1" color="#283618" fontWeight="bold"
+                                    sx={{fontSize: isSmallScreen ? '24px' : '36px'}}>
                             You’ve got
                         </Typography>
-                        <Typography variant="body1" color="#6200EE" fontWeight="bold" sx={{ fontSize: isSmallScreen ? '24px' : '36px' }}>
-                            {`${books?.length} books`}
+                        <Typography variant="body1" color="#6200EE" fontWeight="bold"
+                                    sx={{fontSize: isSmallScreen ? '24px' : '36px'}}>
+                            {`${books?.length || 0} books`}
                         </Typography>
                     </Box>
-                    <Typography variant="body1" color="white" sx={{ fontSize: isSmallScreen ? '16px' : '20px' }}>
+                    <Typography variant="body1" color="#283618" sx={{fontSize: isSmallScreen ? '16px' : '20px'}}>
                         Your books today
                     </Typography>
                 </Box>
@@ -100,34 +106,39 @@ const BookList: React.FC = () => {
                 </Button>
             </Box>
 
-            <Box sx={{ marginTop: '36px' }}>
-                <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
+            <Box sx={{marginTop: '36px'}}>
+                <Grid container spacing={{xs: 2, md: 3}} columns={{xs: 4, sm: 8, md: 12}}>
                     {books?.map((bookItem: BookItemInterface) => {
-                        const { book } = bookItem;
+                        const {book} = bookItem;
 
                         return (
                             <Grid item xs={4} key={book.id}>
                                 <HoverBox
-                                    body={<Buttons book={book} />}
+                                    body={<Buttons callBack={fetchBooks} book={book}/>}
                                 >
-                                    <Card sx={{ borderRadius: '12px' }}>
-                                        <CardContent sx={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                                            <Typography variant="body1" fontWeight="600" fontSize={isSmallScreen ? '14px' : '16px'}>
+                                    <Card sx={{borderRadius: '12px'}}>
+                                        <CardContent sx={{display: 'flex', flexDirection: 'column', gap: '10px'}}>
+
+                                            <Typography variant="body1" fontWeight="600"
+                                                        fontSize={isSmallScreen ? '14px' : '16px'}>
                                                 {book.title}
                                             </Typography>
 
-                                            <CustomList items={mapToListItems(book)} />
+                                            <CustomList items={mapToListItems(book)}/>
 
                                             <Box
                                                 display="flex"
                                                 justifyContent={'space-between'}
                                                 alignItems="start"
                                             >
-                                                <Typography variant="body1" style={{ fontSize: isSmallScreen ? '12px' : '14px', fontWeight: 700 }}>
+                                                <Typography variant="body1" style={{
+                                                    fontSize: isSmallScreen ? '12px' : '14px',
+                                                    fontWeight: 700
+                                                }}>
                                                     {`${book.author} / ${book.published}`}
                                                 </Typography>
 
-                                                <Status status={bookItem.status} />
+                                                <Status status={bookItem.status}/>
                                             </Box>
                                         </CardContent>
                                     </Card>
@@ -142,54 +153,3 @@ const BookList: React.FC = () => {
 }
 
 export default BookList;
-
-const fake = [
-    {
-        "book": {
-            "id": 21,
-            "isbn": "9781118464465",
-            "title": "Guide",
-            "cover": "http://url.to.book.cover",
-            "author": "Eben 3",
-            "published": 2013,
-            "pages": 198
-        },
-        "status": 0
-    },
-    {
-        "book": {
-            "id": 22,
-            "isbn": "9781118464465",
-            "title": "Pi User",
-            "cover": "http://url.to.book.cover",
-            "author": "Eben",
-            "published": 2012,
-            "pages": 21
-        },
-        "status": 1
-    },
-    {
-        "book": {
-            "id": 23,
-            "isbn": "9781118464465",
-            "title": "User Guide",
-            "cover": "http://url.to.book.cover",
-            "author": "Eben 2",
-            "published": 2011,
-            "pages": 331
-        },
-        "status": 0
-    },
-    {
-        "book": {
-            "id": 24,
-            "isbn": "9781118464465",
-            "title": "Raspberry Pi",
-            "cover": "http://url.to.book.cover",
-            "author": "Eben Upton",
-            "published": 2010,
-            "pages": 22
-        },
-        "status": 2
-    }
-]

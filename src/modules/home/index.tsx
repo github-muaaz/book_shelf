@@ -23,7 +23,6 @@ const Home: React.FC = () => {
                 }}
             >
                 <Link href="/books">Books</Link>
-                <Link href="/sign-in">Sign in</Link>
                 <Link href="/sign-up">Sign up</Link>
             </Box>
         </CenterBox>

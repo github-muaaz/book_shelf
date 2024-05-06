@@ -3,8 +3,7 @@ import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import FormControl from "@mui/material/FormControl";
-import FormLabel from "@mui/material/FormLabel";
-import { TextField } from "@mui/material";
+import {InputLabel, MenuItem, Select} from "@mui/material";
 import Button from "@mui/material/Button";
 
 import Api from "../../../service/api";
@@ -17,12 +16,16 @@ const EditModal: React.FC<ModalBodyInterface> = ({ book, onClose }) => {
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
         e.preventDefault();
 
-        const formData = new FormData(e.currentTarget)
+        const form = e.currentTarget;
 
-        Api.PutData(`/book/${book?.id}`, formData, true)
-            .then(() => {
+        const formData = {
+            status: form.status.value
+        };
+
+        Api.PutData(`/books/${book?.id}`, formData, true)
+            ?.then(() => {
                 e.currentTarget?.reset();
-                onClose();
+                        onClose();
             })
     }
 
@@ -46,54 +49,18 @@ const EditModal: React.FC<ModalBodyInterface> = ({ book, onClose }) => {
                     gap: '8px',
                 }}
             >
-                <FormControl component="fieldset" fullWidth>
-                    <FormLabel htmlFor="isbn">ISBN</FormLabel>
-                    <TextField
-                        id="isbn"
-                        name="isbn"
-                        variant="outlined"
-                        defaultValue={book?.isbn}
-                    />
-                </FormControl>
-
-                <FormControl component="fieldset" fullWidth>
-                    <FormLabel htmlFor="title">Title</FormLabel>
-                    <TextField
-                        id="title"
-                        name="title"
-                        variant="outlined"
-                        defaultValue={book?.title}
-                    />
-                </FormControl>
-
-                <FormControl component="fieldset" fullWidth>
-                    <FormLabel htmlFor="author">Author</FormLabel>
-                    <TextField
-                        id="author"
-                        name="author"
-                        variant="outlined"
-                        defaultValue={book?.author}
-                    />
-                </FormControl>
-
-                <FormControl component="fieldset" fullWidth>
-                    <FormLabel htmlFor="published">Published</FormLabel>
-                    <TextField
-                        id="published"
-                        name="published"
-                        variant="outlined"
-                        defaultValue={book?.published}
-                    />
-                </FormControl>
-
-                <FormControl component="fieldset" fullWidth>
-                    <FormLabel htmlFor="pages">Pages</FormLabel>
-                    <TextField
-                        id="pages"
-                        name="pages"
-                        variant="outlined"
-                        defaultValue={book?.pages}
-                    />
+                <FormControl fullWidth>
+                    <InputLabel id="demo-simple-select-label">Status</InputLabel>
+                    <Select
+                        labelId="demo-simple-select-label"
+                        id="demo-simple-select"
+                        label="Status"
+                        name={'status'}
+                    >
+                        <MenuItem value={0}>New</MenuItem>
+                        <MenuItem value={1}>Reading</MenuItem>
+                        <MenuItem value={2}>Finished</MenuItem>
+                    </Select>
                 </FormControl>
 
                 <Box

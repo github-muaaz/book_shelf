@@ -7,7 +7,6 @@ import Button from '@mui/material/Button';
 import Typography from "@mui/material/Typography";
 import FormHelperText from '@mui/material/FormHelperText';
 import Box from "@mui/material/Box";
-import Link from "@mui/material/Link";
 import { useMediaQuery } from "@mui/material";
 
 import CenterBox from "../../components/elements/center-box";
@@ -15,16 +14,18 @@ import Index from "../../components/elements/form";
 import Api from "../../service/api";
 
 interface FormData {
-    username: string;
-    password: string;
-    confirmPassword: string;
+    name: string;
+    email: string;
+    key: string;
+    secret: string;
 }
 
 const SignUp: React.FC = () => {
     const initialFormData = {
-        username: '',
-        password: '',
-        confirmPassword: '',
+        name: '',
+        email: '',
+        key: '',
+        secret: '',
     };
 
     const [formData, setFormData] = useState<FormData>(initialFormData);
@@ -34,14 +35,17 @@ const SignUp: React.FC = () => {
     const validate = (data: FormData): Partial<FormData> => {
         const errors: Partial<FormData> = {};
 
-        if (!data.username || !(/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.username)))
-            errors.username = 'Username should be correct email format';
+        if (!data.name || data.name.trim().length <= 0)
+            errors.name = 'Name must not be empty';
 
-        if (!data.password || data.password.trim().length < 8)
-            errors.password = 'Password must be at least 8 characters';
+        if (!data.email || !(/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)))
+            errors.email = 'Email should be correct email format';
 
-        if (!data.confirmPassword || data.confirmPassword.trim() !== data.password.trim())
-            errors.confirmPassword = 'Password does not match';
+        if (!data.key || data.key.trim().length <= 0)
+            errors.key = 'Key must not be empty';
+
+        if (!data.secret || data.secret.trim().length <= 0)
+            errors.secret = 'Secret must not be empty';
 
         return errors;
     };
@@ -52,8 +56,8 @@ const SignUp: React.FC = () => {
         const errors = validate(formData);
 
         if (Object.keys(errors).length === 0) {
-            console.log('Form data:', formData);
             Api.SignUp(formData);
+
             setFormData(initialFormData);
             setErrors({});
         } else {
@@ -78,7 +82,7 @@ const SignUp: React.FC = () => {
                 alignItems="center"
             >
                 <Typography variant="h2" fontSize={isSmallScreen ? 28 : 38} fontWeight={600}>
-                    Sign in
+                    Sign Up
                 </Typography>
 
                 <Index
@@ -92,61 +96,75 @@ const SignUp: React.FC = () => {
                     }}
                 >
                     <FormControl component="fieldset" fullWidth>
-                        <FormLabel error={!!errors.username} htmlFor="username">Username</FormLabel>
+                        <FormLabel error={!!errors.name} htmlFor="name">Name</FormLabel>
                         <OutlinedInput
-                            id="username"
-                            name="username"
+                            id="name"
+                            name="name"
                             type="text"
-                            value={formData.username}
+                            value={formData.name}
                             onChange={handleChange}
                             required
-                            error={!!errors.username}
-                            placeholder="Enter your username"
+                            error={!!errors.name}
+                            placeholder="Enter your name"
                             sx={{ fontSize: isSmallScreen ? 16 : undefined }}
                         />
-                        {errors.username && <FormHelperText error id="component-error-text">{errors.username}</FormHelperText>}
+                        {errors.name && <FormHelperText error id="component-error-text">{errors.name}</FormHelperText>}
+                    </FormControl>
+
+                    <FormControl component="fieldset" fullWidth>
+                        <FormLabel error={!!errors.email} htmlFor="email">Email</FormLabel>
+                        <OutlinedInput
+                            id="emil"
+                            name="email"
+                            type="text"
+                            value={formData.email}
+                            onChange={handleChange}
+                            required
+                            error={!!errors.email}
+                            placeholder="Enter your email"
+                            sx={{ fontSize: isSmallScreen ? 16 : undefined }}
+                        />
+                        {errors.email && <FormHelperText error id="component-error-text">{errors.email}</FormHelperText>}
                     </FormControl>
 
                     <FormControl component="fieldset" fullWidth>
                         <FormLabel
-                            error={!!errors.password}
-                            htmlFor="password"
+                            error={!!errors.key}
+                            htmlFor="key"
                         >
-                            Password
+                            Key
                         </FormLabel>
                         <OutlinedInput
-                            id="password"
-                            name="password"
-                            type="password"
-                            value={formData.password}
+                            id="key"
+                            name="key"
+                            value={formData.key}
                             onChange={handleChange}
                             required
-                            placeholder="Enter your password"
-                            error={!!errors.password}
+                            placeholder="Enter your key"
+                            error={!!errors.key}
                             sx={{ fontSize: isSmallScreen ? 16 : undefined }}
                         />
-                        {errors.password && <FormHelperText error id="component-error-text">{errors.password}</FormHelperText>}
+                        {errors.key && <FormHelperText error id="component-error-text">{errors.key}</FormHelperText>}
                     </FormControl>
 
                     <FormControl component="fieldset" fullWidth>
                         <FormLabel
-                            error={!!errors.confirmPassword}
-                            htmlFor="confirm-password"
+                            error={!!errors.secret}
+                            htmlFor="secret"
                         >
-                            Confirm Password
+                            Secret
                         </FormLabel>
                         <OutlinedInput
-                            id="confirm-password"
-                            name="confirmPassword"
-                            type="password"
-                            value={formData.confirmPassword}
+                            id="secret"
+                            name="secret"
+                            value={formData.secret}
                             onChange={handleChange}
                             required
-                            placeholder="Enter your confirm password"
-                            error={!!errors.confirmPassword}
+                            placeholder="Enter your secret"
+                            error={!!errors.secret}
                             sx={{ fontSize: isSmallScreen ? 16 : undefined }}
                         />
-                        {errors.confirmPassword && <FormHelperText error id="component-error-text">{errors.confirmPassword}</FormHelperText>}
+                        {errors.secret && <FormHelperText error id="component-error-text">{errors.secret}</FormHelperText>}
                     </FormControl>
 
                     <Box>
@@ -165,15 +183,6 @@ const SignUp: React.FC = () => {
                         >
                             Sign Up
                         </Button>
-
-                        <Box sx={{ display: 'flex', gap: 1, justifyContent: 'center' }}>
-                            <Typography variant="caption" display="block" gutterBottom>
-                                Already signed up?
-                            </Typography>
-                            <Link href="/sign-up" variant="body2" underline={'none'}>
-                                Go to sign in.
-                            </Link>
-                        </Box>
                     </Box>
                 </Index>
             </Stack>

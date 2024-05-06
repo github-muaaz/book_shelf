@@ -11,7 +11,7 @@ import ModalBodyInterface from "../../../interfaces/Modal";
 const DeleteModal: React.FC<ModalBodyInterface> = ({ id, onClose }) => {
     const handleDelete = () => {
         // Api call to delete
-        Api.Delete(`/books/${id}`, true).then(() => onClose());
+        Api.Delete(`/books/${id}`, true)?.then(() => onClose());
     };
 
     return (
