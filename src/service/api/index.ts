@@ -56,7 +56,7 @@ class Api {
                 if (err.response?.status === 403)
                     toast.error('Please! Login or Sign up first');
                 else
-                    toast.error(err.response?.message);
+                    toast.error(err.response?.data?.message);
                 return err;
             });
     };
