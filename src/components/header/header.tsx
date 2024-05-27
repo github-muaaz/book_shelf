@@ -84,7 +84,7 @@ const Header: React.FC = () => {
     return (
         <Box
             display="grid"
-            gridTemplateColumns="auto 1fr auto"
+            gridTemplateColumns={isSmallScreen ? "auto 1fr auto" : "auto 1fr auto"}
             gridTemplateAreas={isSmallScreen
                 ? `
                     "logo bell"
@@ -140,6 +140,10 @@ const Header: React.FC = () => {
                 display={'flex'}
                 alignItems={'center'}
                 mt={isSmallScreen ? 2 : 0}
+                sx={{
+                    width: isSmallScreen ? '85%' : '60%',
+                    margin: isSmallScreen ? '0 auto' : '0',
+                }}
             >
                 {loading ? <CircularProgress size={24} /> : <Icon icon="search" />}
                 <Box
@@ -150,6 +154,7 @@ const Header: React.FC = () => {
                         left: 0,
                         top: '100%',
                         zIndex: 800,
+                        width: '90%',
                         maxWidth: '800px',
                         maxHeight: '500px',
                         overflow: 'scroll',
